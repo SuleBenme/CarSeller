@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class NyKomponent {
-    public int lagerNyKomponent(ArrayList<ArrayList<String>> bilKomponent, ArrayList<String[]> listGui, Gui prueba) throws Exception {
+    public int lagerNyKomponent(ArrayList<ArrayList<String>> bilKomponent, ArrayList<String[]> listGui, Gui element) throws Exception {
         String komponent = JOptionPane.showInputDialog("Hva skal bil-komponenten hete?");
         int antall = Integer.parseInt(JOptionPane.showInputDialog("Antall komponenter"));
         if (antall < 1){
@@ -20,10 +20,10 @@ public class NyKomponent {
 
         if (antall <= 2){
             bilKomponent.add(createListe("RadioButton", komponent));
-            prueba.lagerRadioKnapp(liste);
+            element.lagerRadioKnapp(liste);
         } else if(antall > 2){
             bilKomponent.add(createListe("ChoiceBox", komponent));
-            prueba.lagerChoiceBox(liste);
+            element.lagerChoiceBox(liste);
         }
         int length = bilKomponent.size() -1;
         listGui.add(liste);
