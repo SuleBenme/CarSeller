@@ -66,5 +66,6 @@
             <TableColumn fx:id="prisColumn" prefWidth="57.0" text="Pris" />
         </columns>
       </TableView>
+      <Button fx:id="addKomponent" layoutX="216.0" layoutY="355.0" mnemonicParsing="false" text="Add komponent" />
    </children>
 </AnchorPane>
