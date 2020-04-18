@@ -51,6 +51,7 @@ public class Gui {
         String selectedChoice = choice.getSelectionModel().getSelectedItem();
         return selectedChoice;
     }
+
 }
 
 

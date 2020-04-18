@@ -10,7 +10,7 @@ public class NyKomponent {
         if (antall < 1){
             throw new Exception("Antall komponenter Må være større enn 0");
         } else if(antall > 10){
-            throw new Exception("Antall komponenter Må være mindre enn 0");
+            throw new Exception("Antall komponenter Må være lik eller mindre enn 10");
         }
         String [] liste = new String[antall];
         for(int i = 0; i < antall; i++){

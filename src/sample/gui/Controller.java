@@ -160,51 +160,22 @@ public class Controller implements Initializable {
                                 if (j == optionSelected) {
                                     GridPane.getChildren().clear();
                                     if (BilKomponent.get(i).get(0) == "RadioButton"){
-                                        henteFraRadioButtonListe(radioButtonListe, GridPane, "RadioKnapp", j);
+                                        ArrayList<RadioButton> radioButton = henteFraRadioButtonListe(radioButtonListe, GridPane, "RadioKnapp", j);
+                                        radioButtonTableview(radioButton);
                                     } else if(BilKomponent.get(i).get(0) == "ChoiceBox"){
-                                        henteFraChoiceBoxListe(choiceBoxListe, GridPane, "ChoiceBox", j);
+                                        ChoiceBox<String> choiceBox = henteFraChoiceBoxListe(choiceBoxListe, GridPane, "ChoiceBox", j);
+                                        choiceBoxTableview(choiceBox);
                                     }
                                 }
                             }
                         }
                     }
 
-                    /*
-
-                        create.setOnAction(e -> {
-                            try{
-                                Bil bil = new Farge((String) biltypeChoicebox.getSelectionModel().getSelectedItem(), bilmodellText.getText(), 4, 45.5, nyElement.selectChoiceBox(komponent));
-                                BilListe.add(bil);
-                            } catch (IllegalArgumentException err) {
-                                Dialogs.showErrorDialog(err.getMessage());
-                            }
-                        });
-
-                    }
-                    */
-                     /*
-                    //Interiør komponent
-                    if (optionSelected == 2) {
-                        GridPane.getChildren().clear();
-                        dividir(vacio, GridPane, "Prueba2", 1);
-                        /*
-                        ArrayList<RadioButton> komponent = nyElement.velgInteriør();
-                        create.setOnAction(e -> {
-                            try{
-                                Bil bil = new Farge((String) biltypeChoicebox.getSelectionModel().getSelectedItem(), bilmodellText.getText(), 4, 45.5, nyElement.selectRadioButton(komponent));
-                                BilListe.add(bil);
-                            }
-                            catch(IllegalArgumentException err){
-                                Dialogs.showErrorDialog(err.getMessage());
-                            }
-                        });
-                    }
-                    */
                 });
 
     }
 
-    public void henteFraRadioButtonListe(ArrayList<ArrayList<RadioButton>> lista, GridPane gridPane, String navn, int optionSelected){
+    public ArrayList<RadioButton> henteFraRadioButtonListe(ArrayList<ArrayList<RadioButton>> lista, GridPane gridPane, String navn, int optionSelected){
         for(int i = 0; i < lista.size(); i++){
             if (i == optionSelected){
                 for(int j = 0; j < lista.get(i).size(); j++){
@@ -212,18 +183,47 @@ public class Controller implements Initializable {
                         gridPane.add(label, 0, 0);
                         gridPane.add(lista.get(i).get(j), j, 1);
                 }
+                return lista.get(i);
             }
         }
+        return null;
     }
 
-    public void henteFraChoiceBoxListe(ArrayList<ChoiceBox<String>> liste, GridPane gridPane, String navn, int optionSelected){
+    public ChoiceBox<String> henteFraChoiceBoxListe(ArrayList<ChoiceBox<String>> liste, GridPane gridPane, String navn, int optionSelected){
         for(int i = 0; i < liste.size(); i++){
             if (i == optionSelected) {
                 Label label = new Label(navn);
                 gridPane.add(label, 0, 0);
                 gridPane.add(liste.get(i), 0, 1);
+                return liste.get(i);
             }
         }
+        return null;
+    }
+
+    public void choiceBoxTableview(ChoiceBox<String> choice){
+        Gui nyElement = new Gui();
+        create.setOnAction(e -> {
+            try{
+                Bil bil = new Bil((String) biltypeChoicebox.getSelectionModel().getSelectedItem(), bilmodellText.getText(), 0, 00.0, nyElement.selectChoiceBox(choice));
+                BilListe.add(bil);
+            }
+            catch(IllegalArgumentException err){
+                Dialogs.showErrorDialog(err.getMessage());
+            }
+        });
+    }
+    public void radioButtonTableview(ArrayList<RadioButton> radio){
+        Gui nyElement = new Gui();
+        create.setOnAction(e -> {
+            try{
+                Bil bil = new Bil((String) biltypeChoicebox.getSelectionModel().getSelectedItem(), bilmodellText.getText(), 0, 00.0, nyElement.selectRadioButton(radio));
+                BilListe.add(bil);
+            }
+            catch(IllegalArgumentException err){
+                Dialogs.showErrorDialog(err.getMessage());
+            }
+        });
     }
 
 }
