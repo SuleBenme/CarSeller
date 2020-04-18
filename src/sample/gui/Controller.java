@@ -10,11 +10,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import sample.bilregister.Bil;
-import sample.bilregister.Farge;
-
 import java.net.URL;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import static sample.gui.Gui.*;
 
 
 public class Controller implements Initializable {
@@ -74,12 +74,30 @@ public class Controller implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    //Tableview
     private ObservableList<Bil> BilListe = FXCollections.observableArrayList();
+    //Biltype
     private ObservableList<String> BilType = FXCollections.observableArrayList("Velg", "Elektrisk", "Bensin", "Hybrid");
-    private ObservableList<String> BilKomponent = FXCollections.observableArrayList("Velg", "Farge", "Interiør");
+    //Bilkomponent
+    private ArrayList<ArrayList<String>> BilKomponent = new ArrayList<>();
+    //Hver komponent har forskjellige varianter
+    private ArrayList<String[]> ListGui = new ArrayList<>();
+
+    private String [] Farge = {"Svart", "Hvit", "Blå", "Rød"};
+    private String [] Interiør = {"Svart og hvitt", "Krem"};
+
+    @FXML
+    private Button addKomponent;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        NyKomponent nyKomponent = new NyKomponent();
+
+        BilKomponent.add(nyKomponent.createListe("Velg", "Velg"));
+        BilKomponent.add(nyKomponent.createListe("ChoiceBox", "Farge"));
+        BilKomponent.add(nyKomponent.createListe("RadioButton", "Interiør"));
+
+
         biltypeColumn.setCellValueFactory(new PropertyValueFactory<>("Biltype"));
         bilmodelColumn.setCellValueFactory(new PropertyValueFactory<>("Merke"));
         bilkomponentColumn.setCellValueFactory(new PropertyValueFactory<>("Klass"));
@@ -87,11 +105,42 @@ public class Controller implements Initializable {
         antallColumn.setCellValueFactory(new PropertyValueFactory<>("Antall"));
         prisColumn.setCellValueFactory(new PropertyValueFactory<>("Pris"));
 
+        ListGui.add(Farge);
+        ListGui.add(Interiør);
+
+        //Legger inn data i tableview
         tabell.setItems(BilListe);
 
+        Gui nyElement = new Gui();
+        nyElement.leggeInnNullVerdier();
+
+        for(int i = 0; i < ListGui.size(); i++){
+            if (ListGui.get(i).length <= 2 && ListGui.get(i).length > 0){
+                nyElement.lagerRadioKnapp(ListGui.get(i));
+            } else if(ListGui.get(i).length > 2){
+                nyElement.lagerChoiceBox(ListGui.get(i));
+            }
+        }
+
+        ObservableList<String> liste = FXCollections.observableArrayList();
         // Fyll på choiceboksene
+        for(int i = 0; i < BilKomponent.size(); i++) {
+            liste.add(BilKomponent.get(i).get(1));
+        }
+
+        //Lager ny komponent
+        addKomponent.setOnAction(e -> {
+            try {
+                int length = nyKomponent.lagerNyKomponent(BilKomponent, ListGui, nyElement);
+                liste.add(BilKomponent.get(length).get(1));
+                Dialogs.showSuccessDialog("Ny komponent ble lagt");
+            } catch (Exception err){
+                Dialogs.showErrorDialog(err.getMessage());
+            }
+        });
+
+        komponentChoicebox.setItems(liste);
         biltypeChoicebox.setItems(BilType);
-        komponentChoicebox.setItems(BilKomponent);
         // "Velg" står først i choicebox
         biltypeChoicebox.getSelectionModel().selectFirst();
         komponentChoicebox.getSelectionModel().selectFirst();
@@ -99,14 +148,29 @@ public class Controller implements Initializable {
         komponentChoicebox.getSelectionModel().selectedIndexProperty().addListener(
                 (ov, oldVal, newVal) -> {
                     int optionSelected = newVal.intValue();
+
                     if (optionSelected == 0) {
                         System.out.println("Du må velge en bil-komponent");
                     }
-                    // Farge komponent
-                    if (optionSelected == 1) {
-                        GridPane.getChildren().clear();
-                        Gui nyElement = new Gui(GridPane);
-                        ChoiceBox<String> komponent = nyElement.velgFarge();
+
+                    for(int i = 1; i < BilKomponent.size(); i++){
+                        if (optionSelected == i){
+                            optionSelected--;
+                            for (int j = 0; j < ListGui.size(); j++){
+                                if (j == optionSelected) {
+                                    GridPane.getChildren().clear();
+                                    if (BilKomponent.get(i).get(0) == "RadioButton"){
+                                        henteFraRadioButtonListe(radioButtonListe, GridPane, "RadioKnapp", j);
+                                    } else if(BilKomponent.get(i).get(0) == "ChoiceBox"){
+                                        henteFraChoiceBoxListe(choiceBoxListe, GridPane, "ChoiceBox", j);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    /*
+
                         create.setOnAction(e -> {
                             try{
                                 Bil bil = new Farge((String) biltypeChoicebox.getSelectionModel().getSelectedItem(), bilmodellText.getText(), 4, 45.5, nyElement.selectChoiceBox(komponent));
@@ -115,12 +179,16 @@ public class Controller implements Initializable {
                                 Dialogs.showErrorDialog(err.getMessage());
                             }
                         });
+
                     }
+                    */
+                     /*
                     //Interiør komponent
                     if (optionSelected == 2) {
                         GridPane.getChildren().clear();
-                        Gui nyElement = new Gui(GridPane);
-                        List<RadioButton> komponent = nyElement.velgInteriør();
+                        dividir(vacio, GridPane, "Prueba2", 1);
+                        /*
+                        ArrayList<RadioButton> komponent = nyElement.velgInteriør();
                         create.setOnAction(e -> {
                             try{
                                 Bil bil = new Farge((String) biltypeChoicebox.getSelectionModel().getSelectedItem(), bilmodellText.getText(), 4, 45.5, nyElement.selectRadioButton(komponent));
@@ -131,7 +199,31 @@ public class Controller implements Initializable {
                             }
                         });
                     }
+                    */
                 });
+
+    }
+
+    public void henteFraRadioButtonListe(ArrayList<ArrayList<RadioButton>> lista, GridPane gridPane, String navn, int optionSelected){
+        for(int i = 0; i < lista.size(); i++){
+            if (i == optionSelected){
+                for(int j = 0; j < lista.get(i).size(); j++){
+                        Label label = new Label(navn);
+                        gridPane.add(label, 0, 0);
+                        gridPane.add(lista.get(i).get(j), j, 1);
+                }
+            }
+        }
+    }
+
+    public void henteFraChoiceBoxListe(ArrayList<ChoiceBox<String>> liste, GridPane gridPane, String navn, int optionSelected){
+        for(int i = 0; i < liste.size(); i++){
+            if (i == optionSelected) {
+                Label label = new Label(navn);
+                gridPane.add(label, 0, 0);
+                gridPane.add(liste.get(i), 0, 1);
+            }
+        }
     }
 
 }
