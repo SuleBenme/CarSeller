@@ -4,17 +4,19 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public abstract class Bil {
+public class Bil {
     private SimpleStringProperty biltype;
     private SimpleStringProperty merke;
     private SimpleIntegerProperty antall;
     private SimpleDoubleProperty pris;
+    private SimpleStringProperty komponent;
+
 
     // Tom
     public Bil() {
     }
 
-    public Bil(String biltype, String merke, int antall, double pris)  {
+    public Bil(String biltype, String merke, int antall, double pris, String komponent)  {
         if(!BilValidator.velg(biltype)) {
             throw new IllegalArgumentException("Du må velge biltype!");
         }
@@ -26,12 +28,15 @@ public abstract class Bil {
         this.merke =  new SimpleStringProperty(merke);
         this.antall = new SimpleIntegerProperty(antall);
         this.pris = new SimpleDoubleProperty(pris);
+        this.komponent =  new SimpleStringProperty(komponent);
     }
-
+    /*
     public String getKlass(){
         String className = this.getClass().getSimpleName();
         return className;
     }
+
+     */
 
     public String getBiltype() { return biltype.get(); }
 
@@ -49,9 +54,14 @@ public abstract class Bil {
 
     public void setPris(double pris) { this.pris = new SimpleDoubleProperty(pris); }
 
+    public String getKomponent() { return komponent.get(); }
+
+    public void setKomponent(String komponent) { this.komponent = new SimpleStringProperty(komponent); }
+
+
     @Override
     public String toString() {
-        return String.format("%s %s %s %s %s", getBiltype(), getMerke(), getAntall(), getPris(), getKlass());
+        return String.format("%s %s %s %s %s", getBiltype(), getMerke(), getAntall(), getPris(), getKomponent());
     }
 }
 
