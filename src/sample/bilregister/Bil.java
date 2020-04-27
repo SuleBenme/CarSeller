@@ -11,7 +11,6 @@ public class Bil {
     private SimpleDoubleProperty pris;
     private SimpleStringProperty komponent;
 
-
     // Tom
     public Bil() {
     }

@@ -54,7 +54,7 @@
             <ChoiceBox fx:id="komponentChoicebox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <Button fx:id="create" layoutX="124.0" layoutY="355.0" mnemonicParsing="false" text="Create" />
+      <Button fx:id="create" layoutX="151.0" layoutY="355.0" mnemonicParsing="false" text="Create" />
       <Group />
       <TableView fx:id="tabell" layoutX="352.0" layoutY="-1.0" prefHeight="400.0" prefWidth="464.0">
         <columns>
@@ -67,5 +67,9 @@
         </columns>
       </TableView>
       <Button fx:id="addKomponent" layoutX="216.0" layoutY="355.0" mnemonicParsing="false" text="Add komponent" />
+      <Button fx:id="save" layoutX="14.0" layoutY="355.0" mnemonicParsing="false" text="Save" />
+      <Button fx:id="read" layoutX="78.0" layoutY="355.0" mnemonicParsing="false" text="Read" />
+      <Button fx:id="slett" layoutX="14.0" layoutY="307.0" mnemonicParsing="false" text="Slett" />
+      <Button fx:id="redigere" layoutX="9.0" layoutY="262.0" mnemonicParsing="false" text="Redigere" />
    </children>
 </AnchorPane>
