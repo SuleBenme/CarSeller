@@ -1,8 +1,7 @@
 package sample.gui;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.RadioButton;
+import javafx.collections.ObservableList;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import sample.bilregister.Bil;
 
@@ -19,7 +18,7 @@ public class Komponent {
     //Hver variant har en pris
     public static ArrayList<ArrayList<Double>> Pris = new ArrayList<>();
 
-    public int komponent_selected;
+    private int komponent_selected;
 
     public void komponentChoiceboxSelect(ChoiceBox<String> komponentChoicebox, GridPane gridPane, Button create, Gui nyElement){
         komponentChoicebox.getSelectionModel().selectedIndexProperty().addListener(

@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import static sample.gui.Controller.liste;
 import static sample.gui.Komponent.*;
 
-
-
 public class FileWriter {
     public void readFromFile(ChoiceBox<String> komponentChoicebox, Gui nyElement) throws IOException {
         BufferedReader in = null;
@@ -127,24 +125,23 @@ public class FileWriter {
                     fields[p-1] = "Endre navn";
                     fields[p] = komponent;
                 }
-                int numero = JOptionPane.showConfirmDialog(null,  fields, "Redigerer komponent", JOptionPane.OK_CANCEL_OPTION);
-                TextField[] algo = new TextField[(ListGui.get(index-1).length)*2];
+                int number = JOptionPane.showConfirmDialog(null,  fields, "Redigerer komponent", JOptionPane.OK_CANCEL_OPTION);
+                TextField[] textFieldListe = new TextField[(ListGui.get(index-1).length)*2];
                 System.out.println(ListGui.get(index-1).length);
-                if (numero == JOptionPane.OK_OPTION){
+                if (number == JOptionPane.OK_OPTION){
                     for(int l = 1; l < fields.length; l=l+2){
-                        algo[l] = (TextField) fields[l];
+                        textFieldListe[l] = (TextField) fields[l];
                     }
-                    for (int o = 1; o < algo.length; o=o+2){
-                        System.out.print(algo[o].getText());
+                    for (int o = 1; o < textFieldListe.length; o=o+2){
+                        System.out.print(textFieldListe[o].getText());
                     }
                     int prueba  = 1;
                     for(int p = 0; p < ListGui.get(index-1).length; p++){
                         if (p == 1){
                             prueba = 2;
                         }
-                        ListGui.get(index-1)[p] = algo[p+prueba].getText();
+                        ListGui.get(index-1)[p] = textFieldListe[p+prueba].getText();
                     }
-                    //actualiza();
                 }
             } else if(i == liste.size()-1 && index == 0){
                 System.out.println(index);

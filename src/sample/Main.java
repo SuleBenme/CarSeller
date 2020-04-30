@@ -5,31 +5,32 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sample.gui.Controller;
-
-import java.io.IOException;
 
 public class Main extends Application {
 
-    private static Scene scene;
+    private static Stage primaryStage;
 
     @Override
-    public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("sample", stage));
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage primaryStage) throws Exception {
+        setPrimaryStage(primaryStage);
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/logginn.fxml"));
+
+        primaryStage.setTitle("Hello World");
+        primaryStage.setScene(new Scene(root, 500, 200));
+
+        primaryStage.show();
     }
 
-    private static Parent loadFXML(String fxml, Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
-        Parent root = (Parent)fxmlLoader.load();
-        Controller controller = (Controller) fxmlLoader.getController();
-        controller.setStage(stage);
-        return root;
+    private void setPrimaryStage(Stage stage) {
+        Main.primaryStage = stage;
     }
 
+    static public Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
     public static void main(String[] args) {
+
         launch(args);
     }
 }

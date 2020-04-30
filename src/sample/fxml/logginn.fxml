@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="200.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.LogginnController">
+   <children>
+      <Label layoutX="196.0" layoutY="66.0" text="LOGG INN SOM">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="superbruker" layoutX="155.0" layoutY="113.0" mnemonicParsing="false" text="Superbruker" />
+      <Button fx:id="kunde" layoutX="283.0" layoutY="113.0" mnemonicParsing="false" text="Kunde" />
+   </children>
+</AnchorPane>

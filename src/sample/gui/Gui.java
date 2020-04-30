@@ -13,7 +13,7 @@ public class Gui {
     public static int variant_index = 0;
 
    Gui(){
-       //Legger inn null verdier i listen
+       //Legger inn null verdier i listen med lengde 10
         for(int i = 0; i < maksAntall; i++){
             radioButtonListe.add(null);
             choiceBoxListe.add(null);
@@ -41,7 +41,7 @@ public class Gui {
         radioButtonListe.set(komponent_index++, nyArray);
     }
 
-    //Skal brukes senere i tableview
+    //Skal brukes senere i tableview. Henter ut variant fra Radio Knapper
     public String selectRadioButton(ArrayList<RadioButton> radioListe) {
         for(int i = 0; i < radioListe.size(); i++){
             if(radioListe.get(i).isSelected()){
@@ -51,7 +51,7 @@ public class Gui {
         }
         return null;
     }
-    //Skal brukes senere i tableview
+    //Skal brukes senere i tableview. Henter ut variant fra ChoiceBox
     public String selectChoiceBox(ChoiceBox<String> choice) {
         String selectedChoice = choice.getSelectionModel().getSelectedItem();
         variant_index = choice.getSelectionModel().getSelectedIndex();
@@ -59,7 +59,6 @@ public class Gui {
     }
 
     public ArrayList<RadioButton> henteFraRadioButtonListe(GridPane gridPane, String navn, int optionSelected){
-        System.out.println(radioButtonListe.size());
         for(int i = 0; i < radioButtonListe.size(); i++){
             if (i == optionSelected){
                 for(int j = 0; j < radioButtonListe.get(i).size(); j++){
@@ -75,7 +74,6 @@ public class Gui {
         return null;
     }
     public ChoiceBox<String> henteFraChoiceBoxListe(GridPane gridPane, String navn, int optionSelected){
-        System.out.println(choiceBoxListe.size());
         for(int i = 0; i < choiceBoxListe.size(); i++){
             if (i == optionSelected) {
                 Label label = new Label(navn);

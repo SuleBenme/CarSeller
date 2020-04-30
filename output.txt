@@ -2,3 +2,4 @@ Velg,Velg
 ChoiceBox,Farge;Svart,Hvit,Blå,Rød;34.0,4.0,6.0,7.0
 RadioButton,Interiør;Svart og hvitt,Krem;34.0,35.0
 RadioButton,Nose;Uno,Dos;2.0,6.0
+RadioButton,Prueba;Uno,Dos;345.3,354.0

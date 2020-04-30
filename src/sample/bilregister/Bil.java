@@ -29,13 +29,6 @@ public class Bil {
         this.pris = new SimpleDoubleProperty(pris);
         this.komponent =  new SimpleStringProperty(komponent);
     }
-    /*
-    public String getKlass(){
-        String className = this.getClass().getSimpleName();
-        return className;
-    }
-
-     */
 
     public String getBiltype() { return biltype.get(); }
 
