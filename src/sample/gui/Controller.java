@@ -59,6 +59,9 @@ public class Controller implements Initializable {
     private GridPane GridPane;
 
     @FXML
+    private GridPane hovedGridPane;
+
+    @FXML
     private ChoiceBox biltypeChoicebox;
 
     @FXML
@@ -96,9 +99,9 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         biltypeColumn.setCellValueFactory(new PropertyValueFactory<>("Biltype"));
-        bilmodelColumn.setCellValueFactory(new PropertyValueFactory<>("Merke"));
-        bilkomponentColumn.setCellValueFactory(new PropertyValueFactory<>("Klass"));
-        komponentColumn.setCellValueFactory(new PropertyValueFactory<>("Komponent"));
+        bilmodelColumn.setCellValueFactory(new PropertyValueFactory<>("Bilmodell"));
+        bilkomponentColumn.setCellValueFactory(new PropertyValueFactory<>("Komponent"));
+        komponentColumn.setCellValueFactory(new PropertyValueFactory<>("Variant"));
         antallColumn.setCellValueFactory(new PropertyValueFactory<>("Antall"));
         prisColumn.setCellValueFactory(new PropertyValueFactory<>("Pris"));
 
@@ -142,8 +145,8 @@ public class Controller implements Initializable {
         });
 
         NyKomponent nyKomponent = new NyKomponent();
-        Gui nyElement = new Gui();
-        Komponent komponent = new Komponent();
+        Gui nyElement = new Gui(GridPane);
+        Komponent komponent = new Komponent(nyElement, hovedGridPane);
 
         try {
             FileWriter file = new FileWriter();
@@ -154,7 +157,7 @@ public class Controller implements Initializable {
 
         komponent.komponentChoiceboxSelect(komponentChoicebox, GridPane, create, nyElement);
 
-        //Jeg må fikse den
+        //Jeg må fikse denne metoden
         redigere.setOnAction(e -> {
             /*
             FileWriter file = new FileWriter();
@@ -165,7 +168,7 @@ public class Controller implements Initializable {
         slett.setOnAction(e -> {
             FileWriter file = new FileWriter();
             file.slettKomponent();
-            file.actualiza(nyElement);
+            file.lagerGuiElementer(nyElement);
         });
 
         //Lager ny komponent

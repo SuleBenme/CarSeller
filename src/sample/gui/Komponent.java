@@ -1,24 +1,30 @@
 package sample.gui;
 
-import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import sample.bilregister.Bil;
-
 import java.util.ArrayList;
 import static sample.gui.Controller.*;
 import static sample.gui.Gui.variant_index;
 
 public class Komponent {
-
     //Bilkomponent
     public static ArrayList<ArrayList<String>> BilKomponent = new ArrayList<>();
     //Hver komponent har forskjellige varianter
     public static ArrayList<String[]> ListGui = new ArrayList<>();
-    //Hver variant har en pris
+    //Hver variant har pris
     public static ArrayList<ArrayList<Double>> Pris = new ArrayList<>();
 
     private int komponent_selected;
+
+    private Gui nyElement;
+
+    private GridPane hovedGridPane;
+
+    public Komponent(Gui nyElement, GridPane hovedGridPane){
+        this.nyElement = nyElement;
+        this.hovedGridPane = hovedGridPane;
+    }
 
     public void komponentChoiceboxSelect(ChoiceBox<String> komponentChoicebox, GridPane gridPane, Button create, Gui nyElement){
         komponentChoicebox.getSelectionModel().selectedIndexProperty().addListener(
@@ -36,10 +42,10 @@ public class Komponent {
                                 if (j == optionSelected) {
                                     gridPane.getChildren().clear();
                                     if (BilKomponent.get(i).get(0).equals("RadioButton")){
-                                        ArrayList<RadioButton> radioButton = nyElement.henteFraRadioButtonListe(gridPane, "RadioKnapp", j);
+                                        ArrayList<RadioButton> radioButton = nyElement.henteFraRadioButtonListe("RadioKnapp", j);
                                         radioButtonTableview(radioButton, create);
                                     } else if(BilKomponent.get(i).get(0).equals("ChoiceBox")){
-                                        ChoiceBox<String> choiceBox = nyElement.henteFraChoiceBoxListe(gridPane, "ChoiceBox", j);
+                                        ChoiceBox<String> choiceBox = nyElement.henteFraChoiceBoxListe( "ChoiceBox", j);
                                          choiceBoxTableview(choiceBox, create);
                                     }
                                 }
@@ -50,11 +56,10 @@ public class Komponent {
     }
 
     public void choiceBoxTableview(ChoiceBox<String> choice, Button create){
-        Gui nyElement = new Gui();
         create.setOnAction(e -> {
             try{
                 String komponent = nyElement.selectChoiceBox(choice);
-                Bil bil = new Bil("Biltype", "Merke", 0, Pris.get(komponent_selected).get(variant_index), komponent);
+                Bil bil = new Bil(getBiltype(), getBilmodell(), getAntall(), Pris.get(komponent_selected).get(variant_index), getBilkomponent(),komponent);
                 BilListe.add(bil);
             }
             catch(IllegalArgumentException err){
@@ -64,16 +69,48 @@ public class Komponent {
     }
 
     public void radioButtonTableview(ArrayList<RadioButton> radio, Button create) {
-        Gui nyElement = new Gui();
         create.setOnAction(e -> {
             try {
                 String komponent = nyElement.selectRadioButton(radio);
-                Bil bil = new Bil("Biltype", "Merke", 0, Pris.get(komponent_selected).get(variant_index), komponent);
+                Bil bil = new Bil(getBiltype(), getBilmodell(), getAntall(), Pris.get(komponent_selected).get(variant_index), getBilkomponent() ,komponent);
                 BilListe.add(bil);
             } catch (IllegalArgumentException err) {
                 Dialogs.showErrorDialog(err.getMessage());
             }
         });
     }
+
+    private String getBilmodell() {
+        String name = getString((TextField) hovedGridPane.lookup("#bilmodellText"));
+        return name;
+    }
+
+    private String getBilkomponent() {
+        String bilkomponent = getChoiceBox((ChoiceBox<String>) hovedGridPane.lookup("#komponentChoicebox"));
+        return bilkomponent;
+    }
+
+    private int getAntall() {
+        int antall = getInt((TextField) hovedGridPane.lookup("#antall"));
+        return antall;
+    }
+    private String getBiltype() {
+        String biltype = getChoiceBox((ChoiceBox<String>) hovedGridPane.lookup("#biltypeChoicebox"));
+        return biltype;
+    }
+
+    private String getString(TextField field) {
+        return field.getText();
+    }
+
+    private int getInt(TextField field) {
+        return Integer.parseInt(getString(field));
+    }
+
+    private String getChoiceBox(ChoiceBox<String> choiceBox) {
+        String selectedChoice = choiceBox.getSelectionModel().getSelectedItem();
+        return selectedChoice;
+    }
+
 
 }

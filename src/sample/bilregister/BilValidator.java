@@ -2,8 +2,8 @@ package sample.bilregister;
 
 public class BilValidator {
 
-    static boolean merke(String merke) {
-        return !merke.equals("") && merke.matches("[^\\d]+");
+    static boolean bilmodell(String bilmodell) {
+        return !bilmodell.equals("") && bilmodell.matches("[^\\d]+");
     }
 
     static boolean velg(String velg) {
@@ -16,7 +16,6 @@ public class BilValidator {
     static boolean email(String email) {
         return email.matches("^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
     }
-
      */
 
 

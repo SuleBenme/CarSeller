@@ -10,6 +10,7 @@ public class FileSaver {
         FileWriter writer = new FileWriter("output.txt");
         writer.write(BilKomponent.get(0).get(0) +  "," + BilKomponent.get(0).get(1));
         writer.write(System.lineSeparator());
+
         for(int i = 1; i < BilKomponent.size(); i++) {
             writer.write(BilKomponent.get(i).get(0) + "," + BilKomponent.get(i).get(1));
             writer.write(";");

@@ -42,9 +42,9 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="120.0" layoutY="36.0" prefHeight="64.0" prefWidth="344.0" style="-fx-background-color: #a1a1a1;" />
+      <Label fx:id="label" alignment="TOP_LEFT" layoutX="120.0" layoutY="36.0" prefHeight="64.0" prefWidth="297.0" style="-fx-background-color: #a1a1a1;" />
       <Button fx:id="knapp" layoutX="120.0" layoutY="331.0" mnemonicParsing="false" text="Fullfør kjøp" />
-      <Label layoutX="120.0" layoutY="1.0" text="Bestillingen">
+      <Label layoutX="120.0" layoutY="9.0" text="Bestillingen">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

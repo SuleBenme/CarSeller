@@ -6,37 +6,39 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Bil {
     private SimpleStringProperty biltype;
-    private SimpleStringProperty merke;
+    private SimpleStringProperty bilmodell;
     private SimpleIntegerProperty antall;
     private SimpleDoubleProperty pris;
     private SimpleStringProperty komponent;
+    private SimpleStringProperty variant;
 
-    // Tom
-    public Bil() {
-    }
-
-    public Bil(String biltype, String merke, int antall, double pris, String komponent)  {
+    public Bil(String biltype, String bilmodell, int antall, double pris, String komponent, String variant)  {
         if(!BilValidator.velg(biltype)) {
             throw new IllegalArgumentException("Du må velge biltype!");
         }
-        if(!BilValidator.merke(merke)) {
+        if(!BilValidator.bilmodell(bilmodell)) {
             throw new IllegalArgumentException("Bilmodellen kan ikke være tom eller inneholde tall");
         }
 
+        if(!BilValidator.velg(komponent)) {
+            throw new IllegalArgumentException("Du må velge bilkomponent!");
+        }
+
         this.biltype = new SimpleStringProperty(biltype);
-        this.merke =  new SimpleStringProperty(merke);
+        this.bilmodell =  new SimpleStringProperty(bilmodell);
         this.antall = new SimpleIntegerProperty(antall);
         this.pris = new SimpleDoubleProperty(pris);
         this.komponent =  new SimpleStringProperty(komponent);
+        this.variant =  new SimpleStringProperty(variant);
     }
 
     public String getBiltype() { return biltype.get(); }
 
     public void setBiltype(String biltype) { this.biltype = new SimpleStringProperty(biltype); }
 
-    public String getMerke() { return merke.get(); }
+    public String getBilmodell() { return bilmodell.get(); }
 
-    public void setMerke(String merke) { this.merke = new SimpleStringProperty(merke); }
+    public void setBilmodell(String bilmodell) { this.bilmodell = new SimpleStringProperty(bilmodell); }
 
     public int getAntall() { return antall.get(); }
 
@@ -50,10 +52,14 @@ public class Bil {
 
     public void setKomponent(String komponent) { this.komponent = new SimpleStringProperty(komponent); }
 
+    public String getVariant() { return variant.get(); }
+
+    public void setVariant(String variant) { this.variant = new SimpleStringProperty(variant); }
+
 
     @Override
     public String toString() {
-        return String.format("%s %s %s %s %s", getBiltype(), getMerke(), getAntall(), getPris(), getKomponent());
+        return String.format("%s %s %s %s %s", getBiltype(), getBilmodell(), getAntall(), getPris(), getKomponent());
     }
 }
 

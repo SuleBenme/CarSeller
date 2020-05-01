@@ -12,12 +12,15 @@ public class Gui {
     private int komponent_index = 0;
     public static int variant_index = 0;
 
-   Gui(){
+    private GridPane gridPane;
+
+   Gui(GridPane gridPane){
        //Legger inn null verdier i listen med lengde 10
         for(int i = 0; i < maksAntall; i++){
             radioButtonListe.add(null);
             choiceBoxListe.add(null);
         }
+       this.gridPane = gridPane;
     }
 
     public void lagerChoiceBox(String[] liste) {
@@ -58,7 +61,7 @@ public class Gui {
         return selectedChoice;
     }
 
-    public ArrayList<RadioButton> henteFraRadioButtonListe(GridPane gridPane, String navn, int optionSelected){
+    public ArrayList<RadioButton> henteFraRadioButtonListe(String navn, int optionSelected){
         for(int i = 0; i < radioButtonListe.size(); i++){
             if (i == optionSelected){
                 for(int j = 0; j < radioButtonListe.get(i).size(); j++){
@@ -73,7 +76,7 @@ public class Gui {
         }
         return null;
     }
-    public ChoiceBox<String> henteFraChoiceBoxListe(GridPane gridPane, String navn, int optionSelected){
+    public ChoiceBox<String> henteFraChoiceBoxListe(String navn, int optionSelected){
         for(int i = 0; i < choiceBoxListe.size(); i++){
             if (i == optionSelected) {
                 Label label = new Label(navn);

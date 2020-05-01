@@ -60,7 +60,7 @@ public class FileWriter {
                 }
             }
             komponentChoicebox.getSelectionModel().selectFirst();
-            actualiza(nyElement);
+            lagerGuiElementer(nyElement);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -72,7 +72,7 @@ public class FileWriter {
         }
     }
 
-    public void actualiza(Gui nyElement){
+    public void lagerGuiElementer(Gui nyElement){
         for (String[] strings : ListGui) {
             if (strings.length <= 2 && strings.length > 0) {
                 nyElement.lagerRadioKnapp(strings);
