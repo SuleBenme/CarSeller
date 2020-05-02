@@ -87,7 +87,7 @@ public class Controller implements Initializable {
 
     private boolean erSuperBruker;
 
-    public static ObservableList<String> liste = FXCollections.observableArrayList();
+    public static ObservableList<String> KomponenterListe = FXCollections.observableArrayList();
     //Tableview
     public static  ObservableList<Bil> BilListe = FXCollections.observableArrayList();
     //Biltype
@@ -180,7 +180,7 @@ public class Controller implements Initializable {
             }
         });
 
-        komponentChoicebox.setItems(liste);
+        komponentChoicebox.setItems(KomponenterListe);
         biltypeChoicebox.setItems(BilType);
         // "Velg" står først i choicebox
         biltypeChoicebox.getSelectionModel().selectFirst();

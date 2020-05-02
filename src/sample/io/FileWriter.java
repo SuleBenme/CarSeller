@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import static sample.gui.Controller.liste;
+import static sample.gui.Controller.KomponenterListe;
 
 public class FileWriter {
     private Gui fileWriter;
@@ -39,7 +39,7 @@ public class FileWriter {
                         myList.add(kom1);
                         myList.add(kom2);
                         fileWriter.getBilKomponent().add(myList);
-                        liste.add(kom2);
+                        KomponenterListe.add(kom2);
                     }
                     if (index2.contains(",")){
                         String[] varianter = index2.split(",");
@@ -61,7 +61,7 @@ public class FileWriter {
                     liste_velg.add(kom1);
                     liste_velg.add(kom2);
                     fileWriter.getBilKomponent().add(liste_velg);
-                    liste.add(kom2);
+                    KomponenterListe.add(kom2);
                 }
             }
             komponentChoicebox.getSelectionModel().selectFirst();
@@ -91,22 +91,22 @@ public class FileWriter {
         String m = JOptionPane.showInputDialog("Hvilken komponente du vil slette?");
         int index = 0;
 
-        for(int i = 0; i < liste.size(); i++){
-            if(liste.get(i).toLowerCase().equals(m.toLowerCase())){
+        for(int i = 0; i < KomponenterListe.size(); i++){
+            if(KomponenterListe.get(i).toLowerCase().equals(m.toLowerCase())){
                 index=i;
             }
 
-            if(i == liste.size()-1 && index != 0){
+            if(i == KomponenterListe.size()-1 && index != 0){
                 int svar = JOptionPane.showConfirmDialog(null, "Er du sikker? Komponenten skal slettes", "Bekreft",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (svar == JOptionPane.YES_OPTION) {
-                    liste.remove(index);
+                    KomponenterListe.remove(index);
                     fileWriter.getBilKomponent().remove(index);
                     fileWriter.getListGui().remove(index-1);
                     fileWriter.getPris().remove(index-1);
                     Dialogs.showSuccessDialog("Komponenten ble slettet");
                 }
-            } else if(i == liste.size()-1 && index == 0){
+            } else if(i == KomponenterListe.size()-1 && index == 0){
                 System.out.println(index);
                 Dialogs.showErrorDialog("Vi har ikke funnet komponenten");
             }
