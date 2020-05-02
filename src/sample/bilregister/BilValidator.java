@@ -10,6 +10,11 @@ public class BilValidator {
         return !velg.equals("Velg");
     }
 
+    static boolean tom(String tom) {
+        return !tom.equals("");
+    }
+
+
 
     /* Kunde validering foregår her også
     // Source: https://howtodoinjava.com/regex/java-regex-validate-email-address/

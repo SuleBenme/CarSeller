@@ -3,18 +3,23 @@ package sample.io;
 import javafx.scene.control.ChoiceBox;
 import sample.gui.Dialogs;
 import sample.gui.Gui;
+import sample.gui.Komponent;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import static sample.gui.Controller.liste;
-import static sample.gui.Komponent.*;
 
 public class FileWriter {
+    private Gui fileWriter;
+
+    public FileWriter(Gui fileWriter){
+        this.fileWriter = fileWriter;
+    }
+
     public void readFromFile(ChoiceBox<String> komponentChoicebox, Gui nyElement) throws IOException {
         BufferedReader in = null;
         try {
@@ -33,12 +38,12 @@ public class FileWriter {
                         String kom2 = komponenter[1];
                         myList.add(kom1);
                         myList.add(kom2);
-                        BilKomponent.add(myList);
+                        fileWriter.getBilKomponent().add(myList);
                         liste.add(kom2);
                     }
                     if (index2.contains(",")){
                         String[] varianter = index2.split(",");
-                        ListGui.add(varianter);
+                        fileWriter.getListGui().add(varianter);
                     }
                     if(index3.contains(",")){
                         String [] priser_string = index3.split(",");
@@ -46,7 +51,7 @@ public class FileWriter {
                         for(int i = 0; i < priser_string.length; i++){
                             priser.add(Double.parseDouble(priser_string[i]));
                         }
-                        Pris.add(priser);
+                        fileWriter.getPris().add(priser);
                     }
                 } else{
                     ArrayList<String> liste_velg = new ArrayList<>();
@@ -55,12 +60,12 @@ public class FileWriter {
                     String kom2 = prueba[1];
                     liste_velg.add(kom1);
                     liste_velg.add(kom2);
-                    BilKomponent.add(liste_velg);
+                    fileWriter.getBilKomponent().add(liste_velg);
                     liste.add(kom2);
                 }
             }
             komponentChoicebox.getSelectionModel().selectFirst();
-            lagerGuiElementer(nyElement);
+            lagerGuiElementer();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -72,12 +77,12 @@ public class FileWriter {
         }
     }
 
-    public void lagerGuiElementer(Gui nyElement){
-        for (String[] strings : ListGui) {
+    public void lagerGuiElementer(){
+        for (String[] strings : fileWriter.getListGui()) {
             if (strings.length <= 2 && strings.length > 0) {
-                nyElement.lagerRadioKnapp(strings);
+                fileWriter.lagerRadioKnapp(strings);
             } else if (strings.length > 2) {
-                nyElement.lagerChoiceBox(strings);
+                fileWriter.lagerChoiceBox(strings);
             }
         }
     }
@@ -92,13 +97,13 @@ public class FileWriter {
             }
 
             if(i == liste.size()-1 && index != 0){
-                int svar = JOptionPane.showConfirmDialog(null, "Er du sikker? Komponenten skal slettes?", "Bekreft",
+                int svar = JOptionPane.showConfirmDialog(null, "Er du sikker? Komponenten skal slettes", "Bekreft",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (svar == JOptionPane.YES_OPTION) {
                     liste.remove(index);
-                    BilKomponent.remove(index);
-                    ListGui.remove(index-1);
-                    Pris.remove(index-1);
+                    fileWriter.getBilKomponent().remove(index);
+                    fileWriter.getListGui().remove(index-1);
+                    fileWriter.getPris().remove(index-1);
                     Dialogs.showSuccessDialog("Komponenten ble slettet");
                 }
             } else if(i == liste.size()-1 && index == 0){
@@ -110,6 +115,7 @@ public class FileWriter {
 
 //Jeg ikke ferdig med denne metoden
     public void redigereKomponent(){
+        /*
         String m = JOptionPane.showInputDialog("Hvilken komponente du vil redigere?");
 
         int index = 0;
@@ -148,6 +154,8 @@ public class FileWriter {
                 Dialogs.showErrorDialog("Vi har ikke funnet komponenten");
             }
         }
+
+         */
     }
 
 }

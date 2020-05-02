@@ -5,20 +5,10 @@ import javafx.scene.layout.GridPane;
 import sample.bilregister.Bil;
 import java.util.ArrayList;
 import static sample.gui.Controller.*;
-import static sample.gui.Gui.variant_index;
 
 public class Komponent {
-    //Bilkomponent
-    public static ArrayList<ArrayList<String>> BilKomponent = new ArrayList<>();
-    //Hver komponent har forskjellige varianter
-    public static ArrayList<String[]> ListGui = new ArrayList<>();
-    //Hver variant har pris
-    public static ArrayList<ArrayList<Double>> Pris = new ArrayList<>();
-
     private int komponent_selected;
-
     private Gui nyElement;
-
     private GridPane hovedGridPane;
 
     public Komponent(Gui nyElement, GridPane hovedGridPane){
@@ -26,27 +16,28 @@ public class Komponent {
         this.hovedGridPane = hovedGridPane;
     }
 
-    public void komponentChoiceboxSelect(ChoiceBox<String> komponentChoicebox, GridPane gridPane, Button create, Gui nyElement){
+    public void komponentChoiceboxSelect(ChoiceBox<String> komponentChoicebox, Button create){
         komponentChoicebox.getSelectionModel().selectedIndexProperty().addListener(
                 (ov, oldVal, newVal) -> {
                     int optionSelected = newVal.intValue();
                     if (optionSelected == 0) {
+                        create.setOnAction(e -> {Dialogs.showErrorDialog("Du må velge en bil-komponent");});
                         System.out.println("Du må velge en bil-komponent");
                     }
 
-                    for(int i = 1; i < BilKomponent.size(); i++){
+                    for(int i = 1; i < nyElement.getBilKomponent().size(); i++){
                         if (optionSelected == i){
                             optionSelected--;
                             komponent_selected = optionSelected;
-                            for (int j = 0; j < ListGui.size(); j++){
+                            for (int j = 0; j < nyElement.getListGui().size(); j++){
                                 if (j == optionSelected) {
-                                    gridPane.getChildren().clear();
-                                    if (BilKomponent.get(i).get(0).equals("RadioButton")){
+                                    nyElement.getGridPane().getChildren().clear();
+                                    if (nyElement.getBilKomponent().get(i).get(0).equals("RadioButton")){
                                         ArrayList<RadioButton> radioButton = nyElement.henteFraRadioButtonListe("RadioKnapp", j);
                                         radioButtonTableview(radioButton, create);
-                                    } else if(BilKomponent.get(i).get(0).equals("ChoiceBox")){
+                                    } else if(nyElement.getBilKomponent().get(i).get(0).equals("ChoiceBox")){
                                         ChoiceBox<String> choiceBox = nyElement.henteFraChoiceBoxListe( "ChoiceBox", j);
-                                         choiceBoxTableview(choiceBox, create);
+                                        choiceBoxTableview(choiceBox, create);
                                     }
                                 }
                             }
@@ -59,7 +50,7 @@ public class Komponent {
         create.setOnAction(e -> {
             try{
                 String komponent = nyElement.selectChoiceBox(choice);
-                Bil bil = new Bil(getBiltype(), getBilmodell(), getAntall(), Pris.get(komponent_selected).get(variant_index), getBilkomponent(),komponent);
+                Bil bil = new Bil(getBiltype(), getBilmodell(), getAntall(), nyElement.getPris().get(komponent_selected).get(nyElement.getVariant_index()), getBilkomponent(),komponent);
                 BilListe.add(bil);
             }
             catch(IllegalArgumentException err){
@@ -72,7 +63,7 @@ public class Komponent {
         create.setOnAction(e -> {
             try {
                 String komponent = nyElement.selectRadioButton(radio);
-                Bil bil = new Bil(getBiltype(), getBilmodell(), getAntall(), Pris.get(komponent_selected).get(variant_index), getBilkomponent() ,komponent);
+                Bil bil = new Bil(getBiltype(), getBilmodell(), getAntall(), nyElement.getPris().get(komponent_selected).get(nyElement.getVariant_index()), getBilkomponent(), komponent);
                 BilListe.add(bil);
             } catch (IllegalArgumentException err) {
                 Dialogs.showErrorDialog(err.getMessage());

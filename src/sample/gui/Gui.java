@@ -3,14 +3,22 @@ package sample.gui;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
-import static sample.gui.Komponent.Pris;
 
 public class Gui {
     private final int maksAntall = 10;
+
     private ArrayList<ArrayList<RadioButton>> radioButtonListe= new ArrayList<>();
     private ArrayList<ChoiceBox<String>> choiceBoxListe = new ArrayList<>();
+
+    //Bilkomponent
+    private ArrayList<ArrayList<String>> BilKomponent = new ArrayList<>();
+    //Hver komponent har forskjellige varianter
+    private ArrayList<String[]> ListGui = new ArrayList<>();
+    //Hver variant har pris
+    private ArrayList<ArrayList<Double>> Pris = new ArrayList<>();
+
     private int komponent_index = 0;
-    public static int variant_index = 0;
+    private int variant_index = 0;
 
     private GridPane gridPane;
 
@@ -22,6 +30,22 @@ public class Gui {
         }
        this.gridPane = gridPane;
     }
+    // Get og Set metoder
+    public GridPane getGridPane(){
+        return gridPane;
+    }
+    public ArrayList<ArrayList<String>> getBilKomponent(){
+        return BilKomponent;
+    }
+    public ArrayList<String[]> getListGui(){
+        return ListGui;
+    }
+    public ArrayList<ArrayList<Double>> getPris(){
+        return Pris;
+    }
+    public int getVariant_index(){
+       return variant_index;
+   }
 
     public void lagerChoiceBox(String[] liste) {
         ChoiceBox<String> choicebox = new ChoiceBox();

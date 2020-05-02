@@ -1,12 +1,24 @@
 package sample.gui;
 
+import sample.io.FileSaver;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class NyKomponent {
+import static sample.gui.Controller.liste;
 
-    public int lagerNyKomponent(ArrayList<ArrayList<String>> bilKomponent, ArrayList<String[]> listGui, ArrayList<ArrayList<Double>> prisListe, Gui element) throws Exception {
+public class NyKomponent {
+    private Gui element;
+    private FileSaver saveKomponent;
+
+    public NyKomponent(Gui element, FileSaver saveKomponent) throws Exception {
+        this.element = element;
+        this.saveKomponent = saveKomponent;
+        leggeTilKomponent();
+    }
+
+    public int lagerNyKomponent() throws Exception {
         TextField komponent = new TextField();
         TextField antall_string = new TextField();
         int antall;
@@ -18,6 +30,7 @@ public class NyKomponent {
 
         JOptionPane.showConfirmDialog(null,  fields, "Ny komponent", JOptionPane.OK_CANCEL_OPTION);
 
+        sjekkKomponent(komponent.getText());
         try {
             antall = Integer.parseInt(antall_string.getText());
             if (antall < 1) {
@@ -51,16 +64,33 @@ public class NyKomponent {
             }
 
             if (antall <= 2) {
-                bilKomponent.add(createListe("RadioButton", komponent.getText()));
+                element.getBilKomponent().add(createListe("RadioButton", komponent.getText()));
                 element.lagerRadioKnapp(liste);
             } else if (antall > 2) {
-                bilKomponent.add(createListe("ChoiceBox", komponent.getText()));
+                element.getBilKomponent().add(createListe("ChoiceBox", komponent.getText()));
                 element.lagerChoiceBox(liste);
             }
-            int length = bilKomponent.size() - 1;
-            listGui.add(liste);
-            prisListe.add(listePris);
+
+            int length = element.getBilKomponent().size() - 1;
+            element.getListGui().add(liste);
+            element.getPris().add(listePris);
             return length;
+    }
+
+    public void leggeTilKomponent() throws Exception {
+        int length = lagerNyKomponent();
+        liste.add(element.getBilKomponent().get(length).get(1));
+        saveKomponent.saveToFile();
+
+    }
+
+    public void sjekkKomponent(String navn) throws Exception {
+        for(int i = 0; i < liste.size(); i++){
+            System.out.println(liste.get(i));
+            if (liste.get(i).equals(navn)){
+                throw new Exception("Denne komponenten finnes allerede. Skriv inn en ny komponent");
+            }
+        }
     }
 
     public ArrayList<String> createListe(String type, String komponent){

@@ -23,6 +23,10 @@ public class Bil {
         if(!BilValidator.velg(komponent)) {
             throw new IllegalArgumentException("Du må velge bilkomponent!");
         }
+        if(!BilValidator.tom(variant)) {
+            throw new IllegalArgumentException("Du må velge variant!");
+        }
+
 
         this.biltype = new SimpleStringProperty(biltype);
         this.bilmodell =  new SimpleStringProperty(bilmodell);

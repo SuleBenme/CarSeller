@@ -24,9 +24,6 @@ import java.net.URL;
 
 import java.util.ResourceBundle;
 
-import static sample.gui.Komponent.*;
-
-
 public class Controller implements Initializable {
     @FXML
     private AnchorPane anchorPane;
@@ -144,18 +141,17 @@ public class Controller implements Initializable {
             }
         });
 
-        NyKomponent nyKomponent = new NyKomponent();
         Gui nyElement = new Gui(GridPane);
         Komponent komponent = new Komponent(nyElement, hovedGridPane);
 
         try {
-            FileWriter file = new FileWriter();
+            FileWriter file = new FileWriter(nyElement);
             file.readFromFile(komponentChoicebox, nyElement);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
 
-        komponent.komponentChoiceboxSelect(komponentChoicebox, GridPane, create, nyElement);
+        komponent.komponentChoiceboxSelect(komponentChoicebox, create);
 
         //Jeg må fikse denne metoden
         redigere.setOnAction(e -> {
@@ -166,18 +162,16 @@ public class Controller implements Initializable {
         });
 
         slett.setOnAction(e -> {
-            FileWriter file = new FileWriter();
+            FileWriter file = new FileWriter(nyElement);
             file.slettKomponent();
-            file.lagerGuiElementer(nyElement);
+            file.lagerGuiElementer();
         });
 
         //Lager ny komponent
         addKomponent.setOnAction(e -> {
             try {
-                int length = nyKomponent.lagerNyKomponent(BilKomponent, ListGui, Pris, nyElement);
-                liste.add(BilKomponent.get(length).get(1));
-                FileSaver file = new FileSaver();
-                file.saveToFile();
+                FileSaver saveKomponent = new FileSaver(nyElement);
+                new NyKomponent(nyElement, saveKomponent);
                 Dialogs.showSuccessDialog("Ny komponent ble lagt og lagret");
             } catch (IndexOutOfBoundsException o) {
                 Dialogs.showErrorDialog("Maks 10");
@@ -191,7 +185,6 @@ public class Controller implements Initializable {
         // "Velg" står først i choicebox
         biltypeChoicebox.getSelectionModel().selectFirst();
         komponentChoicebox.getSelectionModel().selectFirst();
-
     }
 
     public void loadCostumerFXML(){
@@ -219,6 +212,5 @@ public class Controller implements Initializable {
         anchorPane.getChildren().remove(redigere);
         erSuperBruker = true;
     }
-
 
 }
