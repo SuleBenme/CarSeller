@@ -87,6 +87,7 @@ public class Controller implements Initializable {
 
     private boolean erSuperBruker;
 
+    //Liste av komponenter
     public static ObservableList<String> KomponenterListe = FXCollections.observableArrayList();
     //Tableview
     public static  ObservableList<Bil> BilListe = FXCollections.observableArrayList();
@@ -102,55 +103,31 @@ public class Controller implements Initializable {
         antallColumn.setCellValueFactory(new PropertyValueFactory<>("Antall"));
         prisColumn.setCellValueFactory(new PropertyValueFactory<>("Pris"));
 
+        slettFraTablaview(slettBil);
+
+        oppdatereListe(BilListe);
+
         //Legger inn data i tableview
         tabell.setItems(BilListe);
 
-        slettBil.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        slettBil.setCellFactory(param -> new TableCell<Bil, Bil>() {
-            private final Button deleteButton = new Button("Slett");
+        komponentChoicebox.setItems(KomponenterListe);
+        biltypeChoicebox.setItems(BilType);
 
-            @Override
-            protected void updateItem(Bil person, boolean empty) {
-                super.updateItem(person, empty);
-
-                if (person == null) {
-                    setGraphic(null);
-                    return;
-                }
-                setGraphic(deleteButton);
-                deleteButton.setOnAction(event -> BilListe.remove(person));
-            }
-        });
-
-        BilListe.addListener((ListChangeListener<Bil>) c -> {
-            System.out.println("Changed on " + c);
-            if (!BilListe.isEmpty()){
-                tilKasse.getChildren().clear();
-                Button knapp = new Button("Til kasse");
-                knapp.setOnAction(e -> loadCostumerFXML());
-                double total = 0 ;
-                for (Bil item : tabell.getItems()) {
-                    total = total + item.getPris();
-                }
-                Label label = new Label("Pris: " +total);
-
-                tilKasse.add(knapp, 0, 0);
-                tilKasse.add(label, 1, 0);
-            } else {
-                tilKasse.getChildren().clear();
-            }
-        });
+        // "Velg" står først i choicebox
+        biltypeChoicebox.getSelectionModel().selectFirst();
+        komponentChoicebox.getSelectionModel().selectFirst();
 
         Gui nyElement = new Gui(GridPane);
         Komponent komponent = new Komponent(nyElement, hovedGridPane);
 
+        //Leser data fra output.text
         try {
             FileWriter file = new FileWriter(nyElement);
             file.readFromFile(komponentChoicebox, nyElement);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
+        //Velge komponent og variant
         komponent.komponentChoiceboxSelect(komponentChoicebox, create);
 
         //Jeg må fikse denne metoden
@@ -160,7 +137,7 @@ public class Controller implements Initializable {
             file.redigereKomponent();
              */
         });
-
+        //Sletter komponent ved å skrive inn navn
         slett.setOnAction(e -> {
             FileWriter file = new FileWriter(nyElement);
             file.slettKomponent();
@@ -180,11 +157,6 @@ public class Controller implements Initializable {
             }
         });
 
-        komponentChoicebox.setItems(KomponenterListe);
-        biltypeChoicebox.setItems(BilType);
-        // "Velg" står først i choicebox
-        biltypeChoicebox.getSelectionModel().selectFirst();
-        komponentChoicebox.getSelectionModel().selectFirst();
     }
 
     public void loadCostumerFXML(){
@@ -202,7 +174,7 @@ public class Controller implements Initializable {
             ex.printStackTrace();
         }
         stage.setTitle("Kasse");
-        stage.setScene(new Scene(root, 600, 384));
+        stage.setScene(new Scene(root, 560, 460));
         stage.show();
     }
 
@@ -211,6 +183,46 @@ public class Controller implements Initializable {
         anchorPane.getChildren().remove(slett);
         anchorPane.getChildren().remove(redigere);
         erSuperBruker = true;
+    }
+
+    public void slettFraTablaview(TableColumn<Bil, Bil> slettBil){
+        slettBil.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+        slettBil.setCellFactory(param -> new TableCell<Bil, Bil>() {
+            private final Button deleteButton = new Button("Slett");
+
+            @Override
+            protected void updateItem(Bil bil, boolean empty) {
+                super.updateItem(bil, empty);
+
+                if (bil == null) {
+                    setGraphic(null);
+                    return;
+                }
+                setGraphic(deleteButton);
+                deleteButton.setOnAction(event -> BilListe.remove(bil));
+            }
+        });
+    }
+
+    public void oppdatereListe(ObservableList<Bil> BilListe){
+        BilListe.addListener((ListChangeListener<Bil>) c -> {
+            System.out.println("Ble en endret i " + c);
+            if (!BilListe.isEmpty()){
+                tilKasse.getChildren().clear();
+                Button knapp = new Button("Til kasse");
+                knapp.setOnAction(e -> loadCostumerFXML());
+                double total = 0 ;
+                for (Bil item : tabell.getItems()) {
+                    total = total + item.getPris();
+                }
+                Label label = new Label("Pris: " +total);
+
+                tilKasse.add(knapp, 0, 0);
+                tilKasse.add(label, 1, 0);
+            } else {
+                tilKasse.getChildren().clear();
+            }
+        });
     }
 
 }

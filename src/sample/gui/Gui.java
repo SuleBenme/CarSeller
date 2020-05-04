@@ -76,7 +76,7 @@ public class Gui {
                 return radioListe.get(i).getText();
             }
         }
-        return null;
+        return "";
     }
     //Skal brukes senere i tableview. Henter ut variant fra ChoiceBox
     public String selectChoiceBox(ChoiceBox<String> choice) {

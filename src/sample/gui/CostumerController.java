@@ -7,10 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import sample.Main;
@@ -46,7 +44,25 @@ public class CostumerController implements Initializable {
     private ChoiceBox<String> levering;
 
     @FXML
-    private Label label;
+    private TableView<Bil> tabell;
+
+    @FXML
+    private TableColumn<Bil, String> biltypeColumn;
+
+    @FXML
+    private TableColumn<Bil, String> bilmodellColumn;
+
+    @FXML
+    private TableColumn<Bil, String> komponentColumn;
+
+    @FXML
+    private TableColumn<Bil, String> variantColumn;
+
+    @FXML
+    private TableColumn<Bil, Integer> antallColumn;
+
+    @FXML
+    private TableColumn<Bil, Double> prisColumn;
 
     private CostumerRegister registerPerson;
 
@@ -58,6 +74,13 @@ public class CostumerController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        biltypeColumn.setCellValueFactory(new PropertyValueFactory<>("Biltype"));
+        bilmodellColumn.setCellValueFactory(new PropertyValueFactory<>("Bilmodell"));
+        komponentColumn.setCellValueFactory(new PropertyValueFactory<>("Komponent"));
+        variantColumn.setCellValueFactory(new PropertyValueFactory<>("Variant"));
+        antallColumn.setCellValueFactory(new PropertyValueFactory<>("Antall"));
+        prisColumn.setCellValueFactory(new PropertyValueFactory<>("Pris"));
+
         registerPerson = new CostumerRegister(gridPaneCostumer);
         knapp.setOnAction(e -> { registerPerson();});
         levering.setItems(Leveringsmåte);
@@ -65,11 +88,7 @@ public class CostumerController implements Initializable {
     }
 
     public void initData(ObservableList<Bil> liste){
-        String out = "";
-        for(Bil item : liste){
-            out+=item.toString() + "\n";
-        }
-        label.setText(out);
+        tabell.setItems(liste);
     }
 
     private void registerPerson() {
@@ -83,6 +102,7 @@ public class CostumerController implements Initializable {
     public void setMode(boolean superbruker){
         ja = superbruker;
     }
+
     public void loadFXML() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("../fxml/sample.fxml"));

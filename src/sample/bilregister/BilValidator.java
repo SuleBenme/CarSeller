@@ -14,7 +14,7 @@ public class BilValidator {
         return !tom.equals("");
     }
 
-
+    static boolean antall(int tall) { return tall >= 0 && tall <= 10; }
 
     /* Kunde validering foregår her også
     // Source: https://howtodoinjava.com/regex/java-regex-validate-email-address/

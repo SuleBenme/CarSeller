@@ -22,7 +22,6 @@ public class Komponent {
                     int optionSelected = newVal.intValue();
                     if (optionSelected == 0) {
                         create.setOnAction(e -> {Dialogs.showErrorDialog("Du må velge en bil-komponent");});
-                        System.out.println("Du må velge en bil-komponent");
                     }
 
                     for(int i = 1; i < nyElement.getBilKomponent().size(); i++){
@@ -53,6 +52,9 @@ public class Komponent {
                 Bil bil = new Bil(getBiltype(), getBilmodell(), getAntall(), nyElement.getPris().get(komponent_selected).get(nyElement.getVariant_index()), getBilkomponent(),komponent);
                 BilListe.add(bil);
             }
+            catch (NumberFormatException nfe) {
+                Dialogs.showErrorDialog("Skriv inn et tall");
+            }
             catch(IllegalArgumentException err){
                 Dialogs.showErrorDialog(err.getMessage());
             }
@@ -65,6 +67,8 @@ public class Komponent {
                 String komponent = nyElement.selectRadioButton(radio);
                 Bil bil = new Bil(getBiltype(), getBilmodell(), getAntall(), nyElement.getPris().get(komponent_selected).get(nyElement.getVariant_index()), getBilkomponent(), komponent);
                 BilListe.add(bil);
+            } catch (NumberFormatException nfe) {
+                Dialogs.showErrorDialog("Skriv inn et tall");
             } catch (IllegalArgumentException err) {
                 Dialogs.showErrorDialog(err.getMessage());
             }

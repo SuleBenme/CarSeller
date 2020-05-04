@@ -19,14 +19,12 @@ public class Bil {
         if(!BilValidator.bilmodell(bilmodell)) {
             throw new IllegalArgumentException("Bilmodellen kan ikke være tom eller inneholde tall");
         }
-
-        if(!BilValidator.velg(komponent)) {
-            throw new IllegalArgumentException("Du må velge bilkomponent!");
-        }
         if(!BilValidator.tom(variant)) {
             throw new IllegalArgumentException("Du må velge variant!");
         }
-
+        if(!BilValidator.antall(antall)) {
+            throw new IllegalArgumentException("Du kan bare bestille mellom 1 og 10 antall for hver komponent");
+        }
 
         this.biltype = new SimpleStringProperty(biltype);
         this.bilmodell =  new SimpleStringProperty(bilmodell);
@@ -63,7 +61,7 @@ public class Bil {
 
     @Override
     public String toString() {
-        return String.format("%s %s %s %s %s", getBiltype(), getBilmodell(), getAntall(), getPris(), getKomponent());
+        return String.format("%s %s %s %s %s", getBiltype(), getBilmodell(), getAntall(), getPris(), getKomponent(), getVariant());
     }
 }
 
