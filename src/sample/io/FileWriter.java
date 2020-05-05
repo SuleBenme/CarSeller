@@ -3,7 +3,6 @@ package sample.io;
 import javafx.scene.control.ChoiceBox;
 import sample.gui.Dialogs;
 import sample.gui.Gui;
-import sample.gui.Komponent;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -11,7 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import static sample.gui.Controller.KomponenterListe;
+import static sample.controllers.Controller.KomponenterListe;
 
 public class FileWriter {
     private Gui fileWriter;
@@ -20,7 +19,7 @@ public class FileWriter {
         this.fileWriter = fileWriter;
     }
 
-    public void readFromFile(ChoiceBox<String> komponentChoicebox, Gui nyElement) throws IOException {
+    public void readFromFile(ChoiceBox<String> komponentChoicebox) throws IOException {
         BufferedReader in = null;
         try {
             in = new BufferedReader(new FileReader("output.txt"));

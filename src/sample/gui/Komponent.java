@@ -4,7 +4,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import sample.bilregister.Bil;
 import java.util.ArrayList;
-import static sample.gui.Controller.*;
+import static sample.controllers.Controller.*;
 
 public class Komponent {
     private int komponent_selected;

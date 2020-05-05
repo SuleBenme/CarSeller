@@ -1,4 +1,4 @@
-package sample.gui;
+package sample.controllers;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import sample.Main;
 import sample.bilregister.Bil;
+import sample.gui.*;
 import sample.io.FileSaver;
 import sample.io.FileWriter;
 
@@ -123,7 +124,7 @@ public class Controller implements Initializable {
         //Leser data fra output.text
         try {
             FileWriter file = new FileWriter(nyElement);
-            file.readFromFile(komponentChoicebox, nyElement);
+            file.readFromFile(komponentChoicebox);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

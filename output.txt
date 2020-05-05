@@ -1,5 +1,0 @@
-Velg,Velg
-ChoiceBox,Farge;Svart,Hvit,Blå,Rød;34.0,4.0,6.0,7.0
-RadioButton,Interiør;Svart og hvitt,Krem;34.0,35.0
-RadioButton,Hallo;Uno,Dos;2.0,6.0
-ChoiceBox,LOL;sdg,dfs,asdf;2.0,3.0,2.0

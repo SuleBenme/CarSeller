@@ -22,7 +22,7 @@ public class Gui {
 
     private GridPane gridPane;
 
-   Gui(GridPane gridPane){
+   public Gui(GridPane gridPane){
        //Legger inn null verdier i listen med lengde 10
         for(int i = 0; i < maksAntall; i++){
             radioButtonListe.add(null);
