@@ -15,6 +15,8 @@ import static sample.controllers.Controller.KomponenterListe;
 public class FileWriter {
     private Gui fileWriter;
 
+    private final String feilmelding = "Noe gikk galt med henting av data";
+
     public FileWriter(Gui fileWriter){
         this.fileWriter = fileWriter;
     }
@@ -31,13 +33,13 @@ public class FileWriter {
                     String index2 = parts[1];
                     String index3 = parts[2];
                     if (index1.contains(",")) {
-                        ArrayList<String> myList = new ArrayList<>();
+                        ArrayList<String> komponent_liste = new ArrayList<>();
                         String[] komponenter = index1.split(",");
                         String kom1 = komponenter[0];
                         String kom2 = komponenter[1];
-                        myList.add(kom1);
-                        myList.add(kom2);
-                        fileWriter.getBilKomponent().add(myList);
+                        komponent_liste.add(kom1);
+                        komponent_liste.add(kom2);
+                        fileWriter.getBilKomponent().add(komponent_liste);
                         KomponenterListe.add(kom2);
                     }
                     if (index2.contains(",")){
@@ -54,9 +56,9 @@ public class FileWriter {
                     }
                 } else{
                     ArrayList<String> liste_velg = new ArrayList<>();
-                    String[] prueba = str.split(",");
-                    String kom1 = prueba[0];
-                    String kom2 = prueba[1];
+                    String[] velg = str.split(",");
+                    String kom1 = velg[0];
+                    String kom2 = velg[1];
                     liste_velg.add(kom1);
                     liste_velg.add(kom2);
                     fileWriter.getBilKomponent().add(liste_velg);

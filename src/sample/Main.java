@@ -15,7 +15,7 @@ public class Main extends Application {
         setPrimaryStage(primaryStage);
         Parent root = FXMLLoader.load(getClass().getResource("fxml/logginn.fxml"));
 
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Logg inn");
         primaryStage.setScene(new Scene(root, 500, 200));
 
         primaryStage.show();
