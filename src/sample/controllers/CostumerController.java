@@ -110,9 +110,9 @@ public class CostumerController implements Initializable {
         Parent root = null;
         try {
             root = loader.load();
-            Controller controller = loader.getController();
+            HandleController handleController = loader.getController();
             if (ja == true) {
-                controller.loggInnKunde();
+                handleController.loggInnKunde();
             }
 
         } catch (

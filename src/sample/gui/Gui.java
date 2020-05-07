@@ -2,6 +2,8 @@ package sample.gui;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class Gui {
@@ -62,6 +64,7 @@ public class Gui {
             nyArray.add(radio);
         }
         ToggleGroup group1 = new ToggleGroup();
+
         for(int i = 0; i < nyArray.size(); i++){
             nyArray.get(i).setToggleGroup(group1);
         }

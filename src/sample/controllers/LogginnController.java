@@ -50,8 +50,8 @@ public class LogginnController implements Initializable {
         Parent root = null;
         try {
             root = loader.load();
-            Controller controller = loader.getController();
-            controller.loggInnKunde();
+            HandleController handleController = loader.getController();
+            handleController.loggInnKunde();
 
         } catch (
                 IOException ex) {

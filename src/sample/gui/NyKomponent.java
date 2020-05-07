@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import static javax.swing.JOptionPane.*;
-import static sample.controllers.Controller.KomponenterListe;
+import static sample.controllers.HandleController.KomponenterListe;
 
 public class NyKomponent {
     private Gui element;

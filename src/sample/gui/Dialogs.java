@@ -13,7 +13,7 @@ public class Dialogs {
         alert.showAndWait();
     }
 
-    public static void showSuccessDialog(String msg) {
+    public static void  showSuccessDialog(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Personregister");
         alert.setHeaderText("Operasjon vellykket");

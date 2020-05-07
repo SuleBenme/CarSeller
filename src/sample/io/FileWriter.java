@@ -10,18 +10,19 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import static sample.controllers.Controller.KomponenterListe;
+import static sample.controllers.HandleController.KomponenterListe;
 
 public class FileWriter {
     private Gui fileWriter;
 
     private final String feilmelding = "Noe gikk galt med henting av data";
 
-    public FileWriter(Gui fileWriter){
+    public FileWriter(Gui fileWriter) throws IOException {
         this.fileWriter = fileWriter;
+        readFromFile();
     }
 
-    public void readFromFile(ChoiceBox<String> komponentChoicebox) throws IOException {
+    public void readFromFile() throws IOException {
         BufferedReader in = null;
         try {
             in = new BufferedReader(new FileReader("output.txt"));
@@ -41,10 +42,14 @@ public class FileWriter {
                         komponent_liste.add(kom2);
                         fileWriter.getBilKomponent().add(komponent_liste);
                         KomponenterListe.add(kom2);
+                    } else{
+                        throw new IOException(feilmelding);
                     }
                     if (index2.contains(",")){
                         String[] varianter = index2.split(",");
                         fileWriter.getListGui().add(varianter);
+                    }else{
+                        throw new IOException(feilmelding);
                     }
                     if(index3.contains(",")){
                         String [] priser_string = index3.split(",");
@@ -53,6 +58,8 @@ public class FileWriter {
                             priser.add(Double.parseDouble(priser_string[i]));
                         }
                         fileWriter.getPris().add(priser);
+                    }else{
+                        throw new IOException(feilmelding);
                     }
                 } else{
                     ArrayList<String> liste_velg = new ArrayList<>();
@@ -65,11 +72,11 @@ public class FileWriter {
                     KomponenterListe.add(kom2);
                 }
             }
-            komponentChoicebox.getSelectionModel().selectFirst();
             lagerGuiElementer();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         } finally {
             if (in != null) {
@@ -113,6 +120,7 @@ public class FileWriter {
             }
         }
     }
+
 
 //Jeg ikke ferdig med denne metoden
     public void redigereKomponent(){

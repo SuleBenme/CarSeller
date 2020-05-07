@@ -4,6 +4,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,9 +24,9 @@ import sample.io.FileWriter;
 import java.io.*;
 import java.net.URL;
 
-import java.util.ResourceBundle;
+import java.util.*;
 
-public class Controller implements Initializable {
+public class HandleController implements Initializable {
     @FXML
     private AnchorPane anchorPane;
 
@@ -88,6 +89,8 @@ public class Controller implements Initializable {
 
     private boolean erSuperBruker;
 
+    private OpenWithThread thread;
+
     //Liste av komponenter
     public static ObservableList<String> KomponenterListe = FXCollections.observableArrayList();
     //Tableview
@@ -121,13 +124,20 @@ public class Controller implements Initializable {
         Gui nyElement = new Gui(GridPane);
         Komponent komponent = new Komponent(nyElement, hovedGridPane);
 
-        //Leser data fra output.text
+        //Leser data fra output.text ved å bruke trådprogrammering
         try {
-            FileWriter file = new FileWriter(nyElement);
-            file.readFromFile(komponentChoicebox);
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            thread = new OpenWithThread(nyElement);
+            thread.setOnSucceeded(this::fileOpened);
+            thread.setOnFailed(this::fileOpeningFailed);
+            Thread th = new Thread(thread);
+            th.setDaemon(true);
+            disableGUI();
+            anchorPane.setDisable(true);
+            th.start();
+        } catch (Exception err){
+            Dialogs.showErrorDialog(err.getMessage());
         }
+
         //Velge komponent og variant
         komponent.komponentChoiceboxSelect(komponentChoicebox, create);
 
@@ -138,9 +148,15 @@ public class Controller implements Initializable {
             file.redigereKomponent();
              */
         });
-        //Sletter komponent ved å skrive inn navn
+
+        //Sletter komponent ved å skrive inn sitt navn
         slett.setOnAction(e -> {
-            FileWriter file = new FileWriter(nyElement);
+            FileWriter file = null;
+            try {
+                file = new FileWriter(nyElement);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             file.slettKomponent();
             file.lagerGuiElementer();
         });
@@ -159,6 +175,20 @@ public class Controller implements Initializable {
         });
 
     }
+
+    private void fileOpeningFailed(WorkerStateEvent e) {
+        Dialogs.showErrorDialog("Kunne ikke åpne inndatafilen. Programmet avsluttes");
+        System.exit(0);
+    }
+
+    private void fileOpened(WorkerStateEvent e) {
+        komponentChoicebox.getSelectionModel().selectFirst();
+        enableGUI();
+    }
+
+    private void disableGUI() { anchorPane.setDisable(true); }
+
+    private void enableGUI() { anchorPane.setDisable(false); }
 
     public void loadCostumerFXML(){
         FXMLLoader loader = new FXMLLoader();
