@@ -1,7 +1,6 @@
 package sample.gui;
 
 import javafx.concurrent.Task;
-import javafx.scene.control.ChoiceBox;
 import sample.io.FileWriter;
 
 public class OpenWithThread extends Task<FileWriter>{

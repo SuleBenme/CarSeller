@@ -21,6 +21,7 @@ public class Komponent {
                 (ov, oldVal, newVal) -> {
                     int optionSelected = newVal.intValue();
                     if (optionSelected == 0) {
+                        nyElement.getGridPane().getChildren().clear();
                         create.setOnAction(e -> {Dialogs.showErrorDialog("Du må velge en bil-komponent");});
                     }
 

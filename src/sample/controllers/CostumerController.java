@@ -15,6 +15,7 @@ import sample.Main;
 import sample.bilregister.Bil;
 import sample.costumerresgister.Costumer;
 import sample.costumerresgister.CostumerRegister;
+import sample.gui.Dialogs;
 
 import java.io.IOException;
 import java.net.URL;
@@ -95,7 +96,6 @@ public class CostumerController implements Initializable {
         Costumer newPerson = registerPerson.createPersonfromGUIandResetFields();
         if(newPerson != null) {
             CostumerListe.add(newPerson);
-            System.out.print(CostumerListe);
             loadFXML();
         }
     }
@@ -115,9 +115,8 @@ public class CostumerController implements Initializable {
                 handleController.loggInnKunde();
             }
 
-        } catch (
-                IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException ex) {
+            Dialogs.showErrorDialog(ex.getMessage());
         }
         stage.setTitle("Kjøp");
         stage.setScene(new Scene(root, 896, 400));

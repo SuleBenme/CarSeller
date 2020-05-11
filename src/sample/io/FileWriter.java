@@ -1,10 +1,9 @@
 package sample.io;
 
-import javafx.scene.control.ChoiceBox;
 import sample.gui.Dialogs;
 import sample.gui.Gui;
+import sample.gui.LagerGuiElemeter;
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,9 +16,10 @@ public class FileWriter {
 
     private final String feilmelding = "Noe gikk galt med henting av data";
 
-    public FileWriter(Gui fileWriter) throws IOException {
+    public FileWriter(Gui fileWriter) throws Exception {
         this.fileWriter = fileWriter;
         readFromFile();
+        LagerGuiElemeter.lagerGuiElementer(fileWriter);
     }
 
     public void readFromFile() throws IOException {
@@ -72,99 +72,16 @@ public class FileWriter {
                     KomponenterListe.add(kom2);
                 }
             }
-            lagerGuiElementer();
+
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Dialogs.showErrorDialog("Vi har ikke funnet filen");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            Dialogs.showErrorDialog(e.getMessage());
         } finally {
             if (in != null) {
                 in.close();
             }
         }
-    }
-
-    public void lagerGuiElementer(){
-        for (String[] strings : fileWriter.getListGui()) {
-            if (strings.length <= 2 && strings.length > 0) {
-                fileWriter.lagerRadioKnapp(strings);
-            } else if (strings.length > 2) {
-                fileWriter.lagerChoiceBox(strings);
-            }
-        }
-    }
-
-    public void slettKomponent (){
-        String m = JOptionPane.showInputDialog("Hvilken komponente du vil slette?");
-        int index = 0;
-
-        for(int i = 0; i < KomponenterListe.size(); i++){
-            if(KomponenterListe.get(i).toLowerCase().equals(m.toLowerCase())){
-                index=i;
-            }
-
-            if(i == KomponenterListe.size()-1 && index != 0){
-                int svar = JOptionPane.showConfirmDialog(null, "Er du sikker? Komponenten skal slettes", "Bekreft",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (svar == JOptionPane.YES_OPTION) {
-                    KomponenterListe.remove(index);
-                    fileWriter.getBilKomponent().remove(index);
-                    fileWriter.getListGui().remove(index-1);
-                    fileWriter.getPris().remove(index-1);
-                    Dialogs.showSuccessDialog("Komponenten ble slettet");
-                }
-            } else if(i == KomponenterListe.size()-1 && index == 0){
-                System.out.println(index);
-                Dialogs.showErrorDialog("Vi har ikke funnet komponenten");
-            }
-        }
-    }
-
-
-//Jeg ikke ferdig med denne metoden
-    public void redigereKomponent(){
-        /*
-        String m = JOptionPane.showInputDialog("Hvilken komponente du vil redigere?");
-
-        int index = 0;
-
-        for(int i = 0; i < liste.size(); i++){
-            if(liste.get(i).toLowerCase().equals(m.toLowerCase())){
-                index=i;
-            }
-            if (i == liste.size()-1 && index != 0){
-                Object[] fields = new Object[(ListGui.get(index-1).length) * 2];
-                for(int p = 1; p < fields.length; p=p+2){
-                    TextField komponent = new TextField("Variant");
-                    fields[p-1] = "Endre navn";
-                    fields[p] = komponent;
-                }
-                int number = JOptionPane.showConfirmDialog(null,  fields, "Redigerer komponent", JOptionPane.OK_CANCEL_OPTION);
-                TextField[] textFieldListe = new TextField[(ListGui.get(index-1).length)*2];
-                System.out.println(ListGui.get(index-1).length);
-                if (number == JOptionPane.OK_OPTION){
-                    for(int l = 1; l < fields.length; l=l+2){
-                        textFieldListe[l] = (TextField) fields[l];
-                    }
-                    for (int o = 1; o < textFieldListe.length; o=o+2){
-                        System.out.print(textFieldListe[o].getText());
-                    }
-                    int prueba  = 1;
-                    for(int p = 0; p < ListGui.get(index-1).length; p++){
-                        if (p == 1){
-                            prueba = 2;
-                        }
-                        ListGui.get(index-1)[p] = textFieldListe[p+prueba].getText();
-                    }
-                }
-            } else if(i == liste.size()-1 && index == 0){
-                System.out.println(index);
-                Dialogs.showErrorDialog("Vi har ikke funnet komponenten");
-            }
-        }
-
-         */
     }
 
 }

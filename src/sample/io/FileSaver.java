@@ -6,11 +6,13 @@ import java.io.IOException;
 
 public class FileSaver {
     private Gui saveKomponent;
+    private int index = 0;
 
     public FileSaver(Gui saveKomponent){
         this.saveKomponent = saveKomponent;
     }
     public void saveToFile() throws IOException {
+        index = 0;
         FileWriter writer = new FileWriter("output.txt");
         writer.write(saveKomponent.getBilKomponent().get(0).get(0) +  "," + saveKomponent.getBilKomponent().get(0).get(1));
         writer.write(System.lineSeparator());
@@ -30,7 +32,14 @@ public class FileSaver {
                 if (saveKomponent.getPris().get(i-1).size() != p+1){
                     writer.write(",");
                 } else{
-                    writer.write(System.lineSeparator());
+                    System.out.println("INDEX fuera: " + index);
+                    System.out.println("Maximo fuera: " + (saveKomponent.getBilKomponent().size()-1));
+
+                    if (index < saveKomponent.getListGui().size()-1) {
+                        System.out.println("INDEX: " + index);
+                        writer.write(System.lineSeparator());
+                        index++;
+                    }
                 }
             }
         }

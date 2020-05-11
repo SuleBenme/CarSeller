@@ -25,17 +25,21 @@ public class Gui {
     private GridPane gridPane;
 
    public Gui(GridPane gridPane){
-       //Legger inn null verdier i listen med lengde 10
+       this.gridPane = gridPane;
+    }
+
+    //Legger inn null verdier i listen med lengde 10
+    public void reset() {
+        komponent_index = 0;
         for(int i = 0; i < maksAntall; i++){
+            System.out.println(i);
             radioButtonListe.add(null);
             choiceBoxListe.add(null);
         }
-       this.gridPane = gridPane;
     }
+
     // Get og Set metoder
-    public GridPane getGridPane(){
-        return gridPane;
-    }
+    public GridPane getGridPane(){ return gridPane; }
     public ArrayList<ArrayList<String>> getBilKomponent(){
         return BilKomponent;
     }
@@ -48,6 +52,7 @@ public class Gui {
     public int getVariant_index(){
        return variant_index;
    }
+
 
     public void lagerChoiceBox(String[] liste) {
         ChoiceBox<String> choicebox = new ChoiceBox();
@@ -127,6 +132,7 @@ public class Gui {
         }
         return null;
     }
+
 }
 
 

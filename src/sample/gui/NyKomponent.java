@@ -1,7 +1,6 @@
 package sample.gui;
 
 import sample.io.FileSaver;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -32,6 +31,7 @@ public class NyKomponent {
         JOptionPane.showConfirmDialog(null, fields, "Ny komponent", JOptionPane.OK_CANCEL_OPTION);
 
         sjekkKomponent(komponent.getText());
+
         try {
             antall = Integer.parseInt(antall_string.getText());
             if (antall < 1) {
@@ -39,8 +39,8 @@ public class NyKomponent {
             } else if (antall > 10) {
                 throw new Exception("Antall komponenter Må være lik eller mindre enn 10");
             }
-        } catch (Exception err) {
-            throw new Exception("Skriv inn et gyldig tall");
+        } catch (NumberFormatException err) {
+            throw new Exception("Antallet kan ikke være tom eller inneholde bokstaver");
         }
 
         String[] liste = new String[antall];
@@ -82,18 +82,15 @@ public class NyKomponent {
     }
 
 
-
-
     public void leggeTilKomponent() throws Exception {
         int length = lagerNyKomponent();
         KomponenterListe.add(element.getBilKomponent().get(length).get(1));
+        //Lagrer komponenten
         saveKomponent.saveToFile();
-
     }
 
     public void sjekkKomponent(String navn) throws Exception {
         for(int i = 0; i < KomponenterListe.size(); i++){
-            System.out.println(KomponenterListe.get(i));
             if (KomponenterListe.get(i).equals(navn)){
                 throw new Exception("Denne komponenten finnes allerede. Skriv inn en ny komponent");
             }
@@ -106,5 +103,6 @@ public class NyKomponent {
         liste.add(komponent);
         return liste;
     }
+
 
 }

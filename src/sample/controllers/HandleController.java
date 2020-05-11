@@ -19,7 +19,6 @@ import sample.Main;
 import sample.bilregister.Bil;
 import sample.gui.*;
 import sample.io.FileSaver;
-import sample.io.FileWriter;
 
 import java.io.*;
 import java.net.URL;
@@ -94,7 +93,7 @@ public class HandleController implements Initializable {
     //Liste av komponenter
     public static ObservableList<String> KomponenterListe = FXCollections.observableArrayList();
     //Tableview
-    public static  ObservableList<Bil> BilListe = FXCollections.observableArrayList();
+    public static ObservableList<Bil> BilListe = FXCollections.observableArrayList();
     //Biltype
     private ObservableList<String> BilType = FXCollections.observableArrayList("Velg", "Elektrisk", "Bensin", "Hybrid");
 
@@ -108,7 +107,6 @@ public class HandleController implements Initializable {
         prisColumn.setCellValueFactory(new PropertyValueFactory<>("Pris"));
 
         slettFraTablaview(slettBil);
-
         oppdatereListe(BilListe);
 
         //Legger inn data i tableview
@@ -121,11 +119,14 @@ public class HandleController implements Initializable {
         biltypeChoicebox.getSelectionModel().selectFirst();
         komponentChoicebox.getSelectionModel().selectFirst();
 
-        Gui nyElement = new Gui(GridPane);
+        Gui nyElement =  new Gui(GridPane);
         Komponent komponent = new Komponent(nyElement, hovedGridPane);
+        FileSaver lagreFil = new FileSaver(nyElement);
+
 
         //Leser data fra output.text ved å bruke trådprogrammering
         try {
+            KomponenterListe.clear();
             thread = new OpenWithThread(nyElement);
             thread.setOnSucceeded(this::fileOpened);
             thread.setOnFailed(this::fileOpeningFailed);
@@ -141,39 +142,35 @@ public class HandleController implements Initializable {
         //Velge komponent og variant
         komponent.komponentChoiceboxSelect(komponentChoicebox, create);
 
-        //Jeg må fikse denne metoden
+        //Redigere komponent ved å skrive inn sitt navn
         redigere.setOnAction(e -> {
-            /*
-            FileWriter file = new FileWriter();
-            file.redigereKomponent();
-             */
+            try {
+                new RedigereKomponent(nyElement, lagreFil);
+            } catch (Exception ex) {
+                Dialogs.showErrorDialog(ex.getMessage());
+            }
         });
 
-        //Sletter komponent ved å skrive inn sitt navn
+        //Slette komponent ved å skrive inn sitt navn
         slett.setOnAction(e -> {
-            FileWriter file = null;
             try {
-                file = new FileWriter(nyElement);
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                new SlettKomponent(nyElement, lagreFil);
+            } catch (Exception ex) {
+                Dialogs.showErrorDialog(ex.getMessage());
             }
-            file.slettKomponent();
-            file.lagerGuiElementer();
         });
 
         //Lager ny komponent
         addKomponent.setOnAction(e -> {
             try {
-                FileSaver saveKomponent = new FileSaver(nyElement);
-                new NyKomponent(nyElement, saveKomponent);
+                new NyKomponent(nyElement, lagreFil);
                 Dialogs.showSuccessDialog("Ny komponent ble lagt og lagret");
             } catch (IndexOutOfBoundsException o) {
-                Dialogs.showErrorDialog("Maks 10");
+                Dialogs.showErrorDialog("Maks 10 komponenter. Du burde slette komponenter");
             } catch (Exception err){
                 Dialogs.showErrorDialog(err.getMessage());
             }
         });
-
     }
 
     private void fileOpeningFailed(WorkerStateEvent e) {
@@ -184,6 +181,7 @@ public class HandleController implements Initializable {
     private void fileOpened(WorkerStateEvent e) {
         komponentChoicebox.getSelectionModel().selectFirst();
         enableGUI();
+        BilListe.clear();
     }
 
     private void disableGUI() { anchorPane.setDisable(true); }
@@ -237,7 +235,7 @@ public class HandleController implements Initializable {
 
     public void oppdatereListe(ObservableList<Bil> BilListe){
         BilListe.addListener((ListChangeListener<Bil>) c -> {
-            System.out.println("Ble en endret i " + c);
+            System.out.println("Listen ble endret i " + c);
             if (!BilListe.isEmpty()){
                 tilKasse.getChildren().clear();
                 Button knapp = new Button("Til kasse");
