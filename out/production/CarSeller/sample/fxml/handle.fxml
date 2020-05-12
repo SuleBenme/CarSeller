@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="896.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.HandleController">
+   <children>
+      <GridPane fx:id="GridPane" layoutX="41.0" layoutY="187.0" style="-fx-background-color: white;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="hovedGridPane" layoutX="40.0" layoutY="57.0" prefHeight="123.0" prefWidth="238.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label GridPane.rowIndex="1" />
+            <Label text="Velg bilmodell:" GridPane.rowIndex="1" />
+            <TextField fx:id="bilmodellText" prefHeight="25.0" prefWidth="88.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </TextField>
+            <Label text="Velg bilkomponent" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="komponentChoicebox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="antall" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Antall" GridPane.rowIndex="3" />
+            <ChoiceBox fx:id="biltypeChoicebox" prefWidth="150.0" GridPane.columnIndex="1" />
+            <Label prefHeight="30.0" prefWidth="92.0" text="Velg type" />
+         </children>
+      </GridPane>
+      <Button fx:id="create" layoutX="40.0" layoutY="297.0" mnemonicParsing="false" text="Legg til handlekurv" />
+
+      <TableView fx:id="tabell" layoutX="352.0" layoutY="41.0" prefHeight="318.0" prefWidth="540.0">
+        <columns>
+            <TableColumn fx:id="biltypeColumn" prefWidth="75.0" text="Biltype" />
+            <TableColumn fx:id="bilmodelColumn" prefWidth="83.0" text="Bilmodel" />
+            <TableColumn fx:id="bilkomponentColumn" prefWidth="101.0" text="Bilkomponent" />
+            <TableColumn fx:id="komponentColumn" prefWidth="101.0" text="Komponent" />
+            <TableColumn fx:id="antallColumn" prefWidth="46.0" text="Antall" />
+            <TableColumn fx:id="prisColumn" prefWidth="57.0" text="Pris" />
+            <TableColumn fx:id="slettBil" prefWidth="82.0" />
+        </columns>
+      </TableView>
+      <Button fx:id="addKomponent" layoutX="171.0" layoutY="297.0" mnemonicParsing="false" text="Add komponent" />
+      <Button fx:id="slett" layoutX="171.0" layoutY="334.0" mnemonicParsing="false" text="Slett" />
+      <Button fx:id="redigere" layoutX="41.0" layoutY="334.0" mnemonicParsing="false" text="Redigere" />
+      <GridPane fx:id="tilKasse" layoutX="352.0" layoutY="355.0" prefHeight="39.0" prefWidth="200.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+      <Label layoutX="352.0" layoutY="11.0" text="Handlekurven">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
