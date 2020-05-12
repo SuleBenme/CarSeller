@@ -32,7 +32,6 @@ public class Gui {
     public void reset() {
         komponent_index = 0;
         for(int i = 0; i < maksAntall; i++){
-            System.out.println(i);
             radioButtonListe.add(null);
             choiceBoxListe.add(null);
         }
@@ -98,7 +97,7 @@ public class Gui {
             if (i == optionSelected){
                 for(int j = 0; j < radioButtonListe.get(i).size(); j++){
                     Label label = new Label(navn);
-                    Label pris = new Label("Pris: "+Pris.get(i).get(j).toString());
+                    Label pris = new Label("Pris: "+ Pris.get(i).get(j).toString());
                     gridPane.add(label, 0, 0);
                     gridPane.add(radioButtonListe.get(i).get(j), j, 1);
                     gridPane.add(pris, j, 2);
