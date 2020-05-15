@@ -123,7 +123,6 @@ public class HandleController implements Initializable {
         Komponent komponent = new Komponent(nyElement, hovedGridPane);
         FileSaver lagreFil = new FileSaver(nyElement);
 
-
         //Leser data fra output.text ved å bruke trådprogrammering
         try {
             KomponenterListe.clear();
@@ -166,7 +165,8 @@ public class HandleController implements Initializable {
                 new NyKomponent(nyElement, lagreFil);
                 Dialogs.showSuccessDialog("Ny komponent ble lagt og lagret");
             } catch (IndexOutOfBoundsException o) {
-                Dialogs.showErrorDialog("Maks 10 komponenter. Du burde slette komponenter");
+                Dialogs.showErrorDialog("Det er flere ennn 10 komponenter. Avslutter programmet");
+                System.out.println(0);
             } catch (Exception err){
                 Dialogs.showErrorDialog(err.getMessage());
             }
@@ -175,7 +175,7 @@ public class HandleController implements Initializable {
 
     private void fileOpeningFailed(WorkerStateEvent e) {
         Dialogs.showErrorDialog("Kunne ikke åpne inndatafilen. Programmet avsluttes");
-        System.exit(0);
+        System.out.println(0);
     }
 
     private void fileOpened(WorkerStateEvent e) {
@@ -244,7 +244,7 @@ public class HandleController implements Initializable {
                 for (Bil item : tabell.getItems()) {
                     total = total + item.getPris();
                 }
-                Label label = new Label("Pris: " +total);
+                Label label = new Label("Pris: " +total + " kr");
 
                 tilKasse.add(knapp, 0, 0);
                 tilKasse.add(label, 1, 0);
@@ -253,5 +253,6 @@ public class HandleController implements Initializable {
             }
         });
     }
+
 
 }

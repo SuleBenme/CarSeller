@@ -105,7 +105,7 @@ public class CostumerController implements Initializable {
 
     public void loadFXML() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../fxml/handle.fxml"));
+        loader.setLocation(getClass().getResource("../fxml/sample.fxml"));
         Stage stage = Main.getPrimaryStage();
         Parent root = null;
         try {

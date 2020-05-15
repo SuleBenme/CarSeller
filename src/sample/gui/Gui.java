@@ -2,9 +2,9 @@ package sample.gui;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-
-import javax.swing.*;
 import java.util.ArrayList;
+
+import static sample.controllers.HandleController.KomponenterListe;
 
 public class Gui {
     private final int maksAntall = 10;
@@ -29,7 +29,7 @@ public class Gui {
     }
 
     //Legger inn null verdier i listen med lengde 10
-    public void reset() {
+    public void reset() throws Exception {
         komponent_index = 0;
         for(int i = 0; i < maksAntall; i++){
             radioButtonListe.add(null);
@@ -97,7 +97,7 @@ public class Gui {
             if (i == optionSelected){
                 for(int j = 0; j < radioButtonListe.get(i).size(); j++){
                     Label label = new Label(navn);
-                    Label pris = new Label("Pris: "+ Pris.get(i).get(j).toString());
+                    Label pris = new Label("Pris: "+Pris.get(i).get(j).toString() + " kr");
                     gridPane.add(label, 0, 0);
                     gridPane.add(radioButtonListe.get(i).get(j), j, 1);
                     gridPane.add(pris, j, 2);
@@ -120,7 +120,7 @@ public class Gui {
                             int index = newVal.intValue();
                             for(int j = 0; j < Pris.get(optionSelected).size(); j++){
                                 if (index == j){
-                                    pris.setText("Pris: " + Pris.get(optionSelected).get(j).toString());
+                                    pris.setText("Pris: " + Pris.get(optionSelected).get(j).toString() + " kr");
                                 }
                             }
 

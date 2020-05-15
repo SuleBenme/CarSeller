@@ -2,7 +2,7 @@ package sample.gui;
 
 public class LagerGuiElemeter {
 
-    public static void lagerGuiElementer(Gui elementer){
+    public static void lagerGuiElementer(Gui elementer) throws Exception {
         elementer.reset();
 
         for (String[] strings : elementer.getListGui()) {

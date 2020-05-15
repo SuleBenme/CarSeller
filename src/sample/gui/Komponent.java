@@ -33,10 +33,10 @@ public class Komponent {
                                 if (j == optionSelected) {
                                     nyElement.getGridPane().getChildren().clear();
                                     if (nyElement.getBilKomponent().get(i).get(0).equals("RadioButton")){
-                                        ArrayList<RadioButton> radioButton = nyElement.henteFraRadioButtonListe(nyElement.getBilKomponent().get(i).get(1), j);
+                                        ArrayList<RadioButton> radioButton = nyElement.henteFraRadioButtonListe("RadioKnapp", j);
                                         radioButtonTableview(radioButton, create);
                                     } else if(nyElement.getBilKomponent().get(i).get(0).equals("ChoiceBox")){
-                                        ChoiceBox<String> choiceBox = nyElement.henteFraChoiceBoxListe( nyElement.getBilKomponent().get(i).get(1), j);
+                                        ChoiceBox<String> choiceBox = nyElement.henteFraChoiceBoxListe( "ChoiceBox", j);
                                         choiceBoxTableview(choiceBox, create);
                                     }
                                 }

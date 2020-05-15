@@ -28,7 +28,7 @@ public class LogginnController implements Initializable {
 
     public void loadSuperbrukerFXML() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../fxml/handle.fxml"));
+        loader.setLocation(getClass().getResource("../fxml/sample.fxml"));
         Stage stage = Main.getPrimaryStage();
         Parent root = null;
         try {
@@ -45,7 +45,7 @@ public class LogginnController implements Initializable {
 
     public void loadKundeFXML() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../fxml/handle.fxml"));
+        loader.setLocation(getClass().getResource("../fxml/sample.fxml"));
         Stage stage = Main.getPrimaryStage();
         Parent root = null;
         try {

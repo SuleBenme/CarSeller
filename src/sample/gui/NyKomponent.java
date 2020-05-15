@@ -16,6 +16,7 @@ public class NyKomponent {
         this.element = element;
         this.saveKomponent = saveKomponent;
         leggeTilKomponent();
+        LagerGuiElemeter.lagerGuiElementer(element);
     }
 
     public int lagerNyKomponent() throws Exception {
@@ -38,6 +39,8 @@ public class NyKomponent {
                 throw new Exception("Antall komponenter Må være større enn 0");
             } else if (antall > 10) {
                 throw new Exception("Antall komponenter Må være lik eller mindre enn 10");
+            } else if (KomponenterListe.size() > 10){
+                throw new Exception("Maks 10 komponenter. Du burde slette komponenter");
             }
         } catch (NumberFormatException err) {
             throw new Exception("Antallet kan ikke være tom eller inneholde bokstaver");
@@ -62,10 +65,12 @@ public class NyKomponent {
                     Dialogs.showErrorDialog("Skriv inn en gyldig pris");
                     i--;
                 }
-            } else if(svar == CANCEL_OPTION){
+            } else if (svar == CANCEL_OPTION) {
                 throw new Exception("Prosessen har blitt avbrutt. Komponenten ble ikke lagret");
             }
+
         }
+
 
         if (antall <= 2) {
             element.getBilKomponent().add(createListe("RadioButton", komponent.getText()));
@@ -78,6 +83,7 @@ public class NyKomponent {
         int length = element.getBilKomponent().size() - 1;
         element.getListGui().add(liste);
         element.getPris().add(listePris);
+        System.out.println(length);
         return length;
     }
 
